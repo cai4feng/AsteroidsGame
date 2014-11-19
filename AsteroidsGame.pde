@@ -1,4 +1,5 @@
 Star [] b;
+Asteroids[] c;
 boolean wIsPressed = false;
 SpaceShip a = new SpaceShip();
 boolean dIsPressed = false;
@@ -13,6 +14,13 @@ public void setup()
       {
         b[i]=new Star();
       }
+  c = new Asteroids[10];
+  
+    for(int i=0;i<c.length;i++)
+      {
+        c[i]=new Asteroids();
+      }
+
    }   
 
 public void draw() 
@@ -24,14 +32,20 @@ public void draw()
       {
         b[i].show();
       }
+  for(int i=0;i<c.length;i++)
+      {
+        c[i].show();
+        c[i].rotate(10);
+        c[i].move();
+      }
   if(wIsPressed == true && aIsPressed == true)
   {
-    a.accelerate(.1);
+    a.accelerate(.05);
     a.rotate(-5);
   }
   else if(wIsPressed == true && dIsPressed == true)
   {
-    a.accelerate(.1);
+    a.accelerate(.05);
     a.rotate(5);
   }
   else if(wIsPressed == true)
@@ -134,7 +148,7 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
       myCenterY = height;    
     }   
   }   
-  public void show ()  //Draws the floater at the current position  
+  public void show ()
   {             
     fill(myColor);   
     stroke(myColor);    
@@ -192,6 +206,44 @@ public void keyReleased()
   }  
 }
 
+class Asteroids extends Floater  
+{   
+  public void setX(int x){myCenterX = x;}
+  public int getX(){return (int)myCenterX;}
+  public void setY(int y){myCenterY = y;}
+  public int getY(){return (int)myCenterY;}
+  public void setDirectionX(double x){myDirectionX = x;}
+  public double getDirectionX(){return (double)myDirectionX;}
+  public void setDirectionY(double y){myDirectionY = y;}
+  public double getDirectionY(){return (double)myDirectionY;}
+  public void setPointDirection(int degrees){myPointDirection = degrees;}
+  public double getPointDirection(){return (double)myPointDirection;}
+  public Asteroids()
+  {
+    corners = 6;
+    xCorners = new int[corners];
+    yCorners = new int[corners];
+    xCorners[0] = 0;
+    yCorners[0] = 28;
+    xCorners[1] = (int)(28*Math.cos(Math.PI/5.5));
+    yCorners[1] = (int)(28*Math.sin(Math.PI/5.5));
+    xCorners[2] = (int)(28*Math.cos(Math.PI/5.5));
+    yCorners[2] = (int)(-28*Math.sin(Math.PI/5.5));
+    xCorners[3] = 0;
+    yCorners[3] = -28; 
+    xCorners[4] =(int)(-28*Math.cos(Math.PI/5.5));
+    yCorners[4] = (int)(-28*Math.sin(Math.PI/5.5));
+    xCorners[5] = (int)(-28*Math.cos(Math.PI/5.5));
+    yCorners[5] = (int)(28*Math.sin(Math.PI/5.5));
+
+    myColor = color(255);
+    myCenterX = Math.random()*800;
+    myCenterY = Math.random()*800;
+    myPointDirection=Math.random()*360;
+    myDirectionX=Math.random()*1;
+    myDirectionY=Math.random()*1;
+  }
+}
 
 class Star    
  {  int myX, myY;
@@ -208,3 +260,4 @@ class Star
   }
 
  }
+
